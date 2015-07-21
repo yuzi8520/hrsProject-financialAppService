@@ -25,6 +25,7 @@ public class LoginController {
 		System.out.println(userBean);
 		//System.out.println(model.get("userName"));
 		//System.out.println(dataSource != null);
+		
 		JdbcTemplate template = new JdbcTemplate(dataSource);
 		System.out.println(template.queryForList("select name from area", String.class));
 		return new ResultBean(true,"登录成功!");
