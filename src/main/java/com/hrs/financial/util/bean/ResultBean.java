@@ -10,7 +10,6 @@ public class ResultBean {
 	}
 	
 	private boolean success;
-	
 	private String msg;
 
 	public boolean isSuccess() {
