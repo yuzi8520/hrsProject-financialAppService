@@ -11,6 +11,7 @@ public class ResultBean {
 	
 	private boolean success;
 	private String msg;
+	private Integer id;
 
 	public boolean isSuccess() {
 		return success;
@@ -26,6 +27,14 @@ public class ResultBean {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	
