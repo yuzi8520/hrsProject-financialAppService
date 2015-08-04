@@ -22,7 +22,7 @@ public class JSonUtil {
 		
 		
 		
-		QueryResult result = new QueryResult();
+		QueryResult result = new QueryResult(true,"");
 		result.setCount(10);
 		result.setMsg("成功!");
 	//result.setCurrPageList(list1);

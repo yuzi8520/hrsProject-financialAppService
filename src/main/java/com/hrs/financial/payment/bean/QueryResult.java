@@ -6,6 +6,12 @@ import com.hrs.financial.util.bean.ResultBean;
 
 public class QueryResult extends ResultBean{
 	
+	public QueryResult(){}
+	
+	public QueryResult(boolean success,String msg){
+		super(success,msg);
+	}
+	
 
     private int count;
 

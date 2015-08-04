@@ -2,9 +2,16 @@ package com.hrs.financial.util.bean;
 
 public class UserBean {
 	
-	private String userName;
+	
+	public UserBean (){}
+	
+	private Integer id ;
+	
+	private String userAccount;
 	
 	private String password;
+	
+	private String userName;
 
 	public String getUserName() {
 		return userName;
@@ -22,8 +29,26 @@ public class UserBean {
 		this.password = password;
 	}
 	
+	
+	
+	public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String toString(){
-		return "userName="+userName+",password="+password;
+		return "userAccount="+userAccount+",password="+password;
 		
 	}
 	

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class QueryParams {
 
-	private int page;
+	private int page = 1;
 	
 	private int user_id;
 
