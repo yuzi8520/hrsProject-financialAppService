@@ -2,6 +2,7 @@ package com.hrs.financial.payment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.hrs.financial.payment.bean.PaymentBean;
@@ -18,6 +19,18 @@ public class PaymentBusiness {
 	@Autowired
 	private PaymentDao dao;
 	
+	
+	@Transactional(rollbackFor = Throwable.class)
+	public ResultBean deleteUserPayment(int id){
+		int rows = dao.deleteUserPaymentById(id);
+		
+		System.out.println("default rows is =="+rows);
+		
+		throw new RuntimeException("测试回滚操作...");
+		
+		//return new ResultBean(true,"完成");
+	}
+		
 	public QueryResult queryUserPayment(QueryParams params){
 		QueryResult result = null;
 		try{

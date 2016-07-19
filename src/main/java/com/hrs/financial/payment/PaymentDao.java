@@ -18,12 +18,31 @@ import com.hrs.financial.util.Constan;
 public class PaymentDao {
 	
 	
+	
 	private JdbcTemplate template;
 	
 	@Autowired
 	public PaymentDao(DataSource dataSource){
 		template = new JdbcTemplate(dataSource);
 	}
+	
+	public int deleteUserPaymentById(int id ){
+		return template.update("delete from hrs_lift_financial where id=?", id);
+	}
+	
+	
+	public PaymentBean getUserPaymentById(int id){
+		StringBuilder sql = new StringBuilder();
+		sql.append("select id,user_id,title,to_char(pay_date,'yyyy-MM-dd') pay_date,pay_money,pay_comment,type,type_name from ")
+		   .append("hrs_lift_financial where id= ?");
+		List<PaymentBean> list = template.query(sql.toString(), new BeanPropertyRowMapper<PaymentBean>(PaymentBean.class), id);
+		if(list.size() > 0){
+			return list.get(0);
+		}
+		
+		return null;		
+	}
+	
 	
 	
 	public List<PaymentBean> queryUserPayments(QueryParams params){

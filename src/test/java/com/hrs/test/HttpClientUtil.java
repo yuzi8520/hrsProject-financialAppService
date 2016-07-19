@@ -10,11 +10,12 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.http.Consts;
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
@@ -24,24 +25,37 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.codehaus.jackson.map.ObjectMapper;
-
-import com.hrs.financial.util.bean.ResultBean;
 
 
 
 public class HttpClientUtil {
 	
 	public static void main(String args[]){
-		Map<String,String> params = new HashMap<String,String>();
-		params.put("userName", "黄大仙");
-		params.put("password", "123456789");
-		ResultBean bean = HttpClientUtil.doPost("http://localhost:8080/mvc/login", params, ResultBean.class);
-		if(bean != null){
-			System.out.println(bean.getMsg());
+		
+		Header h = new BasicHeader("Content-Type"," UserID=JohnDoe; Max-Age=3600; Version=1");
+		System.out.println("name="+h.getName()+",value="+h.getValue());
+		for(HeaderElement e :h.getElements()){
+			System.out.println(e.getName()+","+e.getValue());
+			for(NameValuePair np : e.getParameters()){
+				System.out.println(np.getName()+","+np.getValue());
+			}
+			
 		}
+		
+//		Header
+//		
+//		
+//		Map<String,String> params = new HashMap<String,String>();
+//		params.put("userName", "黄大仙");
+//		params.put("password", "123456789");
+//		ResultBean bean = HttpClientUtil.doPost("http://localhost:8080/mvc/login", params, ResultBean.class);
+//		if(bean != null){
+//			System.out.println(bean.getMsg());
+//		}
 	}
 	
 	/**

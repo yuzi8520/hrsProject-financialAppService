@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans  xmlns="http://www.springframework.org/schema/beans"
-		xmlns:tx="http://www.springframework.org/schema/tx"
-	    xmlns:context="http://www.springframework.org/schema/context"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
-                            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-                            http://www.springframework.org/schema/tx
-                            http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
-                            http://www.springframework.org/schema/context 
-                            http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+		xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+		xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+        					http://www.springframework.org/schema/context 
+        					http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        					http://mybatis.org/schema/mybatis-spring      
+        					http://mybatis.org/schema/mybatis-spring.xsd
+        					http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 	
         <bean  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	 		 <property name="locations">
@@ -19,7 +19,40 @@
 	 		 </property>
 	 	</bean>	 
 	 	
-	 		
+	  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  	<property name="dataSource"  ref="dataSource"></property>
+	  </bean> 
+	  
+	  <context:component-scan base-package="com.hrs.mybatis.test"></context:component-scan>
+	  
+	  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	  	<property name="dataSource" ref="dataSource" ></property>
+	  	<property name="typeAliasesPackage" value="com.hrs.mybatis.test.domain"></property>
+	  	<property name="mapperLocations" value="classpath:/com/hrs/mybatis/test/mapper/*.xml"></property>
+	  </bean>
+	  
+	  
+	  <mybatis:scan base-package="com.hrs.mybatis.test.dao" factory-ref="sqlSessionFactory"/>
+	  
+	 	
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver" value="${jdbc.driverClass}" />
+		<property name="driverUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="alias" value="dataSource" />
+		<property name="prototypeCount" value="2" />
+		<property name="maximumConnectionCount" value="300" />
+		<property name="minimumConnectionCount" value="20" />
+		<property name="maximumActiveTime" value="300000" />
+		<property name="trace" value="true" />
+		<property name="verbose" value="true" />
+		<property name="jmx" value="true" />
+		<property name="houseKeepingTestSql" value="select 1 from dual"></property>
+	</bean>
+	
+	
+      <!-- 
 	  	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close" >
 	  		<property name="driverClass" value="${jdbc.driverClass}"></property>
 	  		<property name="jdbcUrl" value="${jdbc.url}"></property>
@@ -29,21 +62,17 @@
 	  		<property name="initialPoolSize" value="${jdbc.dataSource.initialPoolSize}"></property>
 	  		<property name="maxPoolSize" value="${jdbc.dataSource.maxPoolSize}"></property>
 	  		<property name="minPoolSize" value="${jdbc.dataSource.minPoolSize}"></property> 
-	  		<!--  unit is second -->	
+	  			
 	  		<property name="maxIdleTime" value="${jdbc.dataSource.maxIdleTime}"></property>
 	  		<property name="idleConnectionTestPeriod" value="${jdbc.dataSource.idleConnectionTestPeriod}"></property> 		
 	  		<property name="preferredTestQuery" value="${jdbc.dataSource.preferredTestQuery}"></property>
-	  		<!-- 
+	  	
 	  		<property name="automaticTestTable" value="${jdbc.dataSource.automaticTestTable}"></property>
-	  		 -->
+	  		
 	  		<property name="testConnectionOnCheckout" value="${jdbc.dataSource.testConnectionOnCheckout}"></property>
 	  		<property name="testConnectionOnCheckin" value="${jdbc.dataSource.testConnectionOnCheckin}"></property>
 	  	</bean>	  	
-	  	
-	  	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-	  		<property name="dataSource" ref="dataSource"></property>
-	  	</bean> 
-  
-  	   <tx:annotation-driven   transaction-manager="transactionManager"  proxy-target-class="true" />
+	  -->
+
      
 </beans>
