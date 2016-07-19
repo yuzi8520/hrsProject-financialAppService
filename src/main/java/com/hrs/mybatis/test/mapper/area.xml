@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper
+ 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.hrs.mybatis.test.dao.AreaDao">
+ 	<select id="findAreaByIdAndAbb" parameterType="java.util.Map" resultType="Area">
+ 		select id,name,abb,code from area where id=#{id} and abb='${abb}'
+ 	</select>
+ 	
+ 	  <select id="findStudentByStuSequence"   resultType="XjStudentPo">
+        SELECT STU.ID as id,STU.STU_SEQUENCE as stuSequence,STU.STU_NO as stuNo,STU.NAME as name,STU.SEX as sex,
+        STU.BIRTHDAY as birthday,STU.ADDRESS as address,STU.ORIGIN as origin,STU.NATION as nation,STU.ORIGIN_ADDR as originAddr,
+        STU.BLOOD_TYPE as bloodType,STU.POLITICS as politics,STU.IC_NO as icNo,STU.HOME_PHONE as homePhone,STU.GOOD_AT as goodAt,
+        STU.IDENTY_NO as identyNo,STU.BORN_ADDRESS as bornAddress,STU.HEALTH as health,STU.IC_STATUS as icStatus,
+        STU.IN_SCHOOL_DATE as inSchoolDate,STU.STU_TYPE as stuType,STU.SEAT_NUMBER as seatNumber,STU.CARD_NO as cardNo,
+        STU.HEAD_IMAGE as headImage,STU.QQ as qq,STU.EMAIL as email,STU.XJ_CLASS_JOIN_ID as xjClassJoinId
+        FROM ${abb}_XJ_STUDENT STU
+        WHERE STU.STU_SEQUENCE=#{stuSequence}
+    </select>
+ </mapper>
